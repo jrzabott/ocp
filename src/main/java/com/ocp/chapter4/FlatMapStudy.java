@@ -3,6 +3,7 @@ package com.ocp.chapter4;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -25,7 +26,14 @@ public class FlatMapStudy {
         flatMapExample1();
         convertingWordsToListOfCharAndPrintingThem();
         convertListOfWordsToListOfChartsUsingFlatMap();
+        fabricateAndGetPascalTriangle().ifPresent(list -> list.forEach(System.out::println));
+    }
 
+    private static Optional<List<List<Integer>>> fabricateAndGetPascalTriangle() {
+        final PascalTriangleFactory factory = new PascalTriangleFactory();
+        factory.produceTriangle(10);
+        final Optional<List<List<Integer>>> triangle = factory.getTriangle();
+        return triangle;
     }
 
     private static void convertListOfWordsToListOfChartsUsingFlatMap() {
