@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 
 public class PascalTriangleFactory {
     public static final String LENGTH_MUST_BE_POSITIVE = "Length must be positive";
-    private static Logger logger = Logger.getLogger(PascalTriangleFactory.class.getName());
+    private static final Logger logger = Logger.getLogger(PascalTriangleFactory.class.getName());
     private List<List<Integer>> triangle = new ArrayList<>();
 
     /*
@@ -68,11 +68,11 @@ public class PascalTriangleFactory {
     }
 
     private ArrayList<List<Integer>> initTriangleWithTwoRows() {
-        return new ArrayList<>(Arrays.asList(Arrays.asList(1), Arrays.asList(1, 1)));
+        return new ArrayList<>(Arrays.asList(Collections.singletonList(1), Arrays.asList(1, 1)));
     }
 
     private ArrayList<List<Integer>> initTriangleWithSingleRow() {
-        return new ArrayList<>(Arrays.asList(Arrays.asList(1)));
+        return new ArrayList<>(Collections.singletonList(Collections.singletonList(1)));
     }
 
     private List<Integer> nextRow(List<Integer> previousLine) {
@@ -90,10 +90,10 @@ public class PascalTriangleFactory {
             lastElementIndex--;
         }
 
-        // we only need to calculate the first half the list, than append the second half as a mirror (first half reversed)
+        // we only need to calculate the first half the list, then append the second half as a mirror (first half reversed)
         final List<Integer> secondHalfOfResult = new ArrayList<>(result.subList(0, lastElementIndex));
         Collections.reverse(secondHalfOfResult);
-        // Another fancy way of doing the following: append to the list, the second half of the previous line, as the first half reversed..
+        // Another fancy way of doing the following: append to the list, the second half of the previous line, as the first half reversed.
         result.addAll(secondHalfOfResult.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList()));
         return result;
     }
