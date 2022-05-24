@@ -38,7 +38,7 @@ public class DurationAndPeriod {
             System.out.println("Date after: " + date);
             System.out.println();
         } catch (Exception e) {
-            System.out.println("EXCEPTION: Cannot apply Duration to Date objects.\n" + e.getMessage());
+            System.out.println("EXCEPTION: Cannot apply Duration to Date objects.\n"  + e.getClass().getSimpleName() + "  " + e.getMessage());
             System.out.println();
             System.out.println();
         }
@@ -72,7 +72,7 @@ public class DurationAndPeriod {
             System.out.println("Time after: " + time);
             System.out.println();
         } catch (Exception e) {
-            System.out.println("EXCEPTION: Cannot apply period to time objects.\n" + e.getMessage());
+            System.out.println("EXCEPTION: Cannot apply period to time objects.\n" + e.getClass().getSimpleName() + "  " + e.getMessage());
             System.out.println();
             System.out.println();
         }
