@@ -14,6 +14,11 @@ public class ZooOpen {
 
     private static void printProperties(Locale locale) {
         ResourceBundle rb = ResourceBundle.getBundle("Zoo", locale);
-        rb.keySet().stream().forEach(key -> System.out.println(key + ": " + rb.getString(key)));
+        System.out.println(rb.getString("hello"));
+        System.out.println(rb.getString("open"));
+
+        System.out.println();
+        System.out.println("Printing all keys as values, using a stream.forEach()");
+        rb.keySet().forEach(key -> System.out.println(key + ": " + rb.getString(key)));
     }
 }
