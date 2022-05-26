@@ -1,3 +1,3 @@
 # ocp
-Used for testing stuff for my ref book. OCP Study Guide
+Used for testing stuff from my reference book. OCP Study Guide
 Just a few drafts during my OCP studies.
