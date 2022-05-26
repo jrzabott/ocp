@@ -13,7 +13,7 @@ public class Formatters {
 
     public static void main(String[] args) {
         formattingInteger();
-        formattinCurrency();
+        formattingCurrency();
         formattingDatesAndTimes();
     }
 
@@ -40,7 +40,7 @@ public class Formatters {
         System.out.println(formatter.format(dateTime));
     }
 
-    private static void formattinCurrency() {
+    private static void formattingCurrency() {
         final double ticketPrice = 48;
         NumberFormat usCurrency = NumberFormat.getCurrencyInstance(Locale.US);
         NumberFormat deCurrency = NumberFormat.getCurrencyInstance(Locale.GERMANY);
