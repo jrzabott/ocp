@@ -15,6 +15,15 @@ public class ZooOpen {
         Properties props = loadBundleToPropertiesAndPrintIt();
 
         printingANonExistentProperty(props);
+
+        printingAResourceFromAClassBundle( "closed", us);
+    }
+
+    private static void printingAResourceFromAClassBundle(String key, Locale us) {
+        System.out.println();
+        System.out.println("Printing an resource from a Class ResourceBundle");
+        ResourceBundle rb = ResourceBundle.getBundle("com.ocp.chapter5.Zoo", us); // Attention to class name with package location.
+        System.out.println(rb.getObject(key));
     }
 
     private static void printingANonExistentProperty(Properties props) {
