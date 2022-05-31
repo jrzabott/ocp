@@ -1,8 +1,6 @@
 package com.ocp.chapter7;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 public class Concurrency02ExecutorService {
 
@@ -20,25 +18,21 @@ public class Concurrency02ExecutorService {
     // submit a simple task
     private static Runnable aShortTask = () -> System.out.println("Hello");
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, ExecutionException, TimeoutException {
         // create an ExecutorService
         ExecutorService service = null;
         try {
             // create a single thread pool
             service = Executors.newSingleThreadExecutor();
 
-            service.submit(aShortTask);
-            final Future<?> result = service.submit(aLongTask);
+            final Future<?> resultOfShortTask = service.submit(aShortTask);
+            final Future<?> resultOfLongTask = service.submit(aLongTask);
 
             // check if the task is done
-            while (true) {
-                if (!result.isDone()) {
-                    System.out.println("Waiting");
-                    Thread.sleep(1000);
-                } else {
-                    break;
-                }
-            }
+            resultOfShortTask.get(1, TimeUnit.SECONDS);
+            resultOfLongTask.get(6, TimeUnit.SECONDS);
+            System.out.println("All done.");
+
         } finally {
             if (service != null) service.shutdown();
         }
