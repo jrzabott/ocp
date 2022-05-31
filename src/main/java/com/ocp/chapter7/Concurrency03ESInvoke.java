@@ -38,15 +38,23 @@ public class Concurrency03ESInvoke {
             service = Executors.newSingleThreadExecutor();
 
             // invoke all callables in a list, and get the results
-            all = service.invokeAll(myClass.getCallables(), 10, TimeUnit.SECONDS);
+//            all = service.invokeAll(myClass.getCallables(), 10, TimeUnit.SECONDS);
+//            all = service.invokeAll(myClass.getCallables());
+//            all = myClass.getCallables().stream().map(service::submit).collect(Collectors.toList());
+            all = Arrays.asList(service.submit(myClass.getC1()), service.submit(myClass.getC2()), service.submit(myClass.getC3()));
+            /*
+             * Funny Fact not matter the submission format, all the threads will be invoked and we will have to wait for
+             * them all. The method submit(), also starts the thread. =/
+             */
+
 
             // get results individually and print them on the screen.
-            all.forEach(getFuturesResults());
+//            all.forEach(getFuturesResults());
 
 
-        } catch (InterruptedException e) {
-            printExceptionMsg(e);
-            Thread.currentThread().interrupt();
+//        } catch (InterruptedException e) {
+//            printExceptionMsg(e);
+//            Thread.currentThread().interrupt();
         } catch (CancellationException e) {
             System.out.println("Execution cancelled: " + e.getMessage());
         } finally {
@@ -54,8 +62,22 @@ public class Concurrency03ESInvoke {
             printNotCancelledTasks(all);
         }
 
-    }
+        try {
+            if (service != null) {
+                service.awaitTermination(1, TimeUnit.MINUTES);
+                if (service.isTerminated()) {
+                    System.out.println("All tasks completed");
+                } else {
+                    System.out.println("Not all tasks completed");
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            Thread.currentThread().interrupt();
+        }
 
+    }
+// kept for historical reasons
     private static Consumer<Future<String>> getFuturesResults() {
         return future -> {
             try {
@@ -107,6 +129,6 @@ public class Concurrency03ESInvoke {
     }
 
     private long getSleepTime() {
-        return (long) (Math.random() * SECOND_IN_MILLIS * 10);
+        return (long) (Math.random() * SECOND_IN_MILLIS * 100);
     }
 }
