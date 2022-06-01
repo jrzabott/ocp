@@ -10,17 +10,21 @@ public class SheepManager {
     private AtomicInteger sheepCountAtomic = new AtomicInteger(0);
 
     public static void main(String[] args) throws InterruptedException {
+        for (int i = 0; i < 10; i++) {
+            extracted();
+        }
+
+    }
+
+    private static void extracted() throws InterruptedException {
         ExecutorService executor = Executors.newFixedThreadPool(20);
         SheepManager manager = new SheepManager();
 
-        for (int j = 0; j < 10; j++) {
+        synchronized (lock) {
             for (int i = 0; i < 10; i++) {
                 executor.submit(manager::incrementAndReport);
             }
-            synchronized (lock) {
-                System.out.println();
-                manager.sheepCountAtomic.set(0);
-            }
+            System.out.println();
         }
         executor.shutdown();
         executor.awaitTermination(1, java.util.concurrent.TimeUnit.DAYS);
