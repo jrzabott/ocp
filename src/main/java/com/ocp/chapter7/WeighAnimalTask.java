@@ -21,7 +21,7 @@ public class WeighAnimalTask extends RecursiveTask<Double> {
     }
 
     public static void main(String[] args) {
-        Double[] weights = new Double[20];
+        Double[] weights = new Double[10];
 
         ForkJoinTask<Double> task = new WeighAnimalTask(0, weights.length, weights);
         ForkJoinPool pool = new ForkJoinPool();
@@ -56,11 +56,16 @@ public class WeighAnimalTask extends RecursiveTask<Double> {
     private double weightFewAnimals() {
         double sum = 0;
         for (int i = start; i < end; i++) {
-            weights[i] = generateRandomWeight();
+            weights[i] = weights.length == 10 ? generateRandomWeight(i) : generateRandomWeight();
             System.out.println("Animal Weighted: " + i + ": " + weights[i]);
             sum += weights[i];
         }
         return sum;
+    }
+
+    private double generateRandomWeight(int i) {
+        double[] localWeight = {94, 73, 8, 92, 75, 63, 76, 60, 73, 3};
+        return localWeight[i];
     }
 
     private double generateRandomWeight() {
