@@ -23,14 +23,19 @@ public class WeighAnimalTask extends RecursiveTask<Double> {
     public static void main(String[] args) {
         Double[] weights = new Double[20];
 
-        ForkJoinTask<?> task = new WeighAnimalAction(0, weights.length, weights);
+        ForkJoinTask<Double> task = new WeighAnimalTask(0, weights.length, weights);
         ForkJoinPool pool = new ForkJoinPool();
-        pool.invoke(task);
+        Double sum = pool.invoke(task);
 
         // print results
         System.out.println();
         System.out.print("Weights: ");
-        Arrays.stream(weights).forEach(w -> System.out.printf("%.0f ", w));
+        System.out.println(Arrays.toString(weights));
+        System.out.println("Manual sum: " + Arrays.stream(weights).mapToDouble(w -> w).sum());
+
+        // print only the sum of the weights
+        System.out.println();
+        System.out.println("Sum of weights: " + sum);
     }
 
     @Override
@@ -61,7 +66,9 @@ public class WeighAnimalTask extends RecursiveTask<Double> {
     private double generateRandomWeight() {
         double result = 0.0;
         try {
-            result = SecureRandom.getInstance("SHA1PRNG").nextInt() * 100.0;
+            while (result <= 0.0) {
+                result = SecureRandom.getInstance("SHA1PRNG").nextInt(100);
+            }
         } catch (NoSuchAlgorithmException e) {
             System.out.println("Error generating random weight: " + e.getMessage());
         }
