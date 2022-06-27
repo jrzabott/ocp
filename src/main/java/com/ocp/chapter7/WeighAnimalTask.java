@@ -35,10 +35,8 @@ public class WeighAnimalTask extends RecursiveTask<Double> {
 
     @Override
     protected Double compute() {
-        if (end - start <= 3)
-            return weightFewAnimals();
-        else
-            return weightLotsOfAnimals();
+        if (end - start <= 3) return weightFewAnimals();
+        else return weightLotsOfAnimals();
 
     }
 
